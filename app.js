@@ -567,6 +567,7 @@ function setupHomeButton() {
 }
 
 setupHomeButton();
+
 /* =========================
    OPEN FOLDER VIEW
 ========================= */
@@ -579,19 +580,19 @@ function openFolderView(projectId) {
 
   const home = document.getElementById("home");
 
-  // Show Home page (folders & summary always visible)
+  // Show Home page (folders visible, summary hidden in folder view)
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   home.classList.add("active");
 
-  // Summary always visible
+  // Hide summary in folder view
   const summary = document.getElementById("summary");
-  if (summary) summary.style.display = "block";
+  if (summary) summary.style.display = "none";
 
-  // Remove any old folder overlay
+  // Remove old folder overlay
   const oldFolderView = document.getElementById("folderView");
   if (oldFolderView) oldFolderView.remove();
 
-  // Create new folder view container
+  // Create folder view
   const folderView = document.createElement("div");
   folderView.id = "folderView";
   folderView.style.marginTop = "50px";
@@ -607,7 +608,6 @@ function openFolderView(projectId) {
   `;
   home.appendChild(folderView);
 
-  // Render the first tab by default
   renderFolderTab("portfolio");
 }
 
@@ -641,16 +641,13 @@ document.addEventListener("click", (e) => {
    SHOW SECTION (NAV)
 ========================= */
 function showSection(id) {
-  // Hide all pages
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-
-  // Show requested page
   const page = document.getElementById(id);
   if (page) page.classList.add("active");
 
-  // Summary only visible on Home
+  // Show summary **only on Home**
   const summary = document.getElementById("summary");
-  if (summary) summary.style.display = "block"; // always visible in Home
+  if (summary) summary.style.display = (id === "home") ? "block" : "none";
 
   // Remove folderView when leaving Home
   if (id !== "home") {
@@ -658,7 +655,6 @@ function showSection(id) {
     if (folderView) folderView.remove();
   }
 
-  // Open first tab if Workspace
   if (id === "workspace") openTab("portfolio");
 
   toggleNav(isAdmin);
@@ -675,26 +671,23 @@ function setupHomeButton() {
     viewProjectId = null;
     data.current = null;
 
-    // Remove folderView if it exists
     const folderView = document.getElementById("folderView");
     if (folderView) folderView.remove();
 
-    // Show Home page
     document.querySelectorAll(".page").forEach(p => {
       if (p.id !== "home") p.classList.remove("active");
       else p.classList.add("active");
     });
 
-    // Summary always visible
+    // Show summary only on Home
     const summary = document.getElementById("summary");
     if (summary) summary.style.display = "block";
 
-    // Always render folders in Home
     renderHomeFolders();
-
     toggleNav(isAdmin);
   };
 }
+
 
 // Initialize home button
 setupHomeButton();
@@ -726,6 +719,24 @@ function backToProjects() {
   // Update navigation buttons
   toggleNav(isAdmin);
 }
+
+/* =========================
+   WORKSPACE TAB SWITCHING
+========================= */
+function openTab(tabName) {
+  // Hide all tabs
+  document.querySelectorAll("#workspace .tab").forEach(t => t.classList.remove("active"));
+
+  // Show the selected tab
+  const tab = document.getElementById(tabName);
+  if (tab) tab.classList.add("active");
+
+  // Highlight tab button
+  document.querySelectorAll("#workspace .subnav button").forEach(b => b.classList.remove("active"));
+  const btn = Array.from(document.querySelectorAll("#workspace .subnav button")).find(b => b.textContent.toLowerCase().includes(tabName));
+  if (btn) btn.classList.add("active");
+}
+
 
 /* =========================
    ATTACH BACK BUTTON HANDLER
