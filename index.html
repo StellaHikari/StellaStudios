@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>StellaStudio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>StellaStudio</h1>
+  <p>My Art • Projects • Devlog</p>
+
+  <!-- Admin navigation -->
+  <nav id="mainNav">
+    <button class="home">Home</button>
+    <button onclick="showSection('projects')">Projects</button>
+    <button onclick="showSection('workspace')">Workspace</button>
+  </nav>
+</header>
+
+<div id="home" class="page active">
+  <div id="summary">
+    <h2>Welcome to Stella Studio</h2>
+    <p>Hey! I’m Stella Hikari.
+ This is where I share the projects I’m working on, from my portfolio to my devlogs. You can also see how my projects are coming along and what I’m experimenting with.
+  </div>
+</div>
+
+</section>
+
+
+
+<main>
+
+  <!-- HOME: Project Folders -->
+<section id="home" class="page active">
+  <h2>Welcome</h2>
+  <p>Click a project folder to view it:</p>
+  <div id="homeFolders" class="folder-grid"></div>
+    <!-- JS dynamically adds project folders here -->
+  </div>
+</section>
+
+
+  <!-- HOME: View-Only Project Folder -->
+  <section id="homeProjectFolderView" class="page">
+    <button id="backToHome">← Back to Projects</button>
+    <h2 id="folderTitle">Project Name</h2>
+
+    <nav class="subnav">
+      <button onclick="renderFolderTab('portfolio')">Portfolio</button>
+      <button onclick="renderFolderTab('log')">Devlog</button>
+      <button onclick="renderFolderTab('tracker')">Tasks</button>
+    </nav>
+
+    <!-- PORTFOLIO (view-only) -->
+    <div id="folderPortfolio" class="tab grid view-only">
+      <!-- JS dynamically adds portfolio cards -->
+    </div>
+
+    <!-- DEVLOG (view-only) -->
+    <div id="folderLog" class="tab view-only">
+      <div id="folderLogList">
+        <!-- JS dynamically adds devlog posts -->
+      </div>
+    </div>
+
+    <!-- TASKS (view-only) -->
+    <div id="folderTracker" class="tab view-only">
+      <ul id="folderTaskList">
+        <!-- JS dynamically adds tasks -->
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROJECTS PAGE (admin only) -->
+  <section id="projects" class="page">
+    <h2>Projects</h2>
+
+    <div class="project-box">
+      <input id="projectName" placeholder="New project name">
+      <button onclick="addProject()">Create</button>
+      <button onclick="exportData()">Export Backup</button>
+      <input type="file" id="importFile" hidden onchange="importData(this)">
+      <button onclick="importFile.click()">Import Backup</button>
+    </div>
+
+    <ul id="projectList">
+      <!-- JS dynamically adds project list here -->
+    </ul>
+  </section>
+
+  <!-- WORKSPACE (admin only) -->
+<section id="workspace" class="page">
+  <h2 id="currentProject">No Project Open</h2>
+
+  <div class="subnav">
+    <button onclick="openTab('portfolio')">Portfolio</button>
+    <button onclick="openTab('log')">Devlog</button>
+    <button onclick="openTab('tracker')">Tasks</button>
+    <button onclick="showSection('projects')">← Back</button>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div id="portfolio" class="tab">
+    <div class="upload-box">
+      <input type="file" id="imgInput" accept="image/*">
+      <input id="imgTitle" placeholder="Title">
+      <input id="imgDesc" placeholder="Description">
+      <button onclick="addImage()">Upload</button>
+    </div>
+    <div id="portfolioGrid" class="grid">
+      <!-- JS dynamically adds portfolio cards here -->
+    </div>
+  </div>
+
+  <!-- DEVLOG -->
+  <div id="log" class="tab">
+    <div class="log-form">
+      <input id="logTitle" placeholder="Title">
+      <textarea id="logText"></textarea>
+      <button onclick="addLog()">Post</button>
+    </div>
+    <div id="logList">
+      <!-- JS dynamically adds devlog posts here -->
+    </div>
+  </div>
+
+  <!-- TASKS -->
+  <div id="tracker" class="tab">
+    <div class="task-input">
+      <input id="taskText" placeholder="New task">
+      <button onclick="addTask()">Add</button>
+    </div>
+    <ul id="taskList">
+      <!-- JS dynamically adds tasks here -->
+    </ul>
+  </div>
+</section>
+
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
